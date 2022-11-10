@@ -4,13 +4,15 @@ defmodule PlugCowboyApi.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: PlugCowboyApi.Worker.start_link(arg)
-      # {PlugCowboyApi.Worker, arg}
+      {Plug.Cowboy, scheme: :http, plug: PlugCowboyApi.Router, options: [port: 8080]}
     ]
+
+    Logger.info("Application is starting...")
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
